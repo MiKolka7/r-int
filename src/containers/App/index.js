@@ -1,22 +1,34 @@
 // Core
 import React, { Component } from 'react';
+import { string } from 'prop-types';
 
 // Instruments
-import Styles from './styles.scss';
-import moment from 'moment';
+import Feed from '../../components/Feed';
+import Cather from '../../components/Cather';
+import avatar from '../../theme/assets/my-avatar.jpg';
+
+const groupID = 'l1lz1az2m5';
+
+const options = {
+    firstName: 'Mykola',
+    lastName:  'Koval',
+    avatar,
+    api:       `https://lab.lectrum.io/feed/${groupID}`
+};
 
 export default class App extends Component {
+    static childContextTypes = {
+        firstName: string.isRequired,
+        lastName:  string.isRequired,
+        avatar:    string.isRequired,
+        api:       string.isRequired
+    };
 
-    timer = setInterval(() => this.forceUpdate(), 1000);
+    getChildContext () {
+        return options;
+    }
 
     render () {
-        return (
-            <section className = { Styles.app }>
-                <h1>Welcome!</h1>
-                <p>
-                    It is {moment().format('MMMM D h:mm:ss a')}.
-                </p>
-            </section>
-        );
+        return <Cather><Feed /></Cather>;
     }
 }
